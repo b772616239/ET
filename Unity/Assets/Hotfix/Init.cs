@@ -5,7 +5,7 @@ namespace ETHotfix
 {
 	public static class Init
 	{
-		public static void Start()
+		public async static void Start()
 		{
 #if ILRuntime
 			if (!Define.IsILRuntime)
@@ -37,8 +37,9 @@ namespace ETHotfix
 
 				UnitConfig unitConfig = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1001);
 				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
+                await Game.Scene.AddComponent<FUIInitComponent>().Init();
 
-				Game.EventSystem.Run(EventIdType.InitSceneStart);
+                Game.EventSystem.Run(EventIdType.InitSceneStart);
 			}
 			catch (Exception e)
 			{
