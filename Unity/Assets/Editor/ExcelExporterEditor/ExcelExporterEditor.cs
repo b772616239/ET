@@ -61,8 +61,8 @@ public class ExcelExporterEditor : EditorWindow
 				
 				ExportAll(clientPath);
 				
-				ExportAllClass(@"./Assets/Model/Module/Demo/Config", "namespace ETModel\n{\n");
-				ExportAllClass(@"./Assets/Hotfix/Module/Demo/Config", "using ETModel;\n\nnamespace ETHotfix\n{\n");
+				ExportAllClass(@"./Assets/Model/WarDemo/Config", "namespace ETModel\n{\n");
+				ExportAllClass(@"./Assets/Hotfix/WarDemo/Config", "using ETModel;\n\nnamespace ETHotfix\n{\n");
 				
 				Log.Info($"导出客户端配置完成!");
 			}
@@ -73,7 +73,7 @@ public class ExcelExporterEditor : EditorWindow
 				
 				ExportAll(ServerConfigPath);
 				
-				ExportAllClass(@"../Server/Model/Module/Demo/Config", "namespace ETModel\n{\n");
+				ExportAllClass(@"../Server/Model/WarDemo/Config", "namespace ETModel\n{\n");
 				
 				Log.Info($"导出服务端配置完成!");
 			}
@@ -114,6 +114,10 @@ public class ExcelExporterEditor : EditorWindow
 		string protoName = Path.GetFileNameWithoutExtension(fileName);
 		
 		string exportPath = Path.Combine(exportDir, $"{protoName}.cs");
+        //if (!Directory.Exists(exportPath))
+        //{
+        //    Directory.CreateDirectory(exportPath);
+        //}
 		using (FileStream txt = new FileStream(exportPath, FileMode.Create))
 		using (StreamWriter sw = new StreamWriter(txt))
 		{

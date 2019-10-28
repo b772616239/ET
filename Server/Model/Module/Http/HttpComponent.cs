@@ -53,8 +53,11 @@ namespace ETModel
 		public void Awake()
 		{
 			StartConfig startConfig = StartConfigComponent.Instance.StartConfig;
-			this.HttpConfig = startConfig.GetComponent<HttpConfig>();
 
+            var sConfig= StartConfigComponent.Instance.GetByType(SceneType.Http);
+
+            this.HttpConfig = sConfig.GetComponent<HttpConfig>();
+           
 			this.Load();
 		}
 

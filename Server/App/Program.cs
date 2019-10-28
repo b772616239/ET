@@ -45,8 +45,9 @@ namespace ETModel
 				Game.Scene.AddComponent<MessageDispatcherComponent>();
 				Game.Scene.AddComponent<ConfigComponent>();
 				Game.Scene.AddComponent<CoroutineLockComponent>();
-				// 发送普通actor消息
-				Game.Scene.AddComponent<ActorMessageSenderComponent>();
+
+                // 发送普通actor消息
+                Game.Scene.AddComponent<ActorMessageSenderComponent>();
 				// 发送location actor消息
 				Game.Scene.AddComponent<ActorLocationSenderComponent>();
 				// 访问location server的组件
@@ -57,6 +58,7 @@ namespace ETModel
 				// 控制台组件
 				Game.Scene.AddComponent<ConsoleComponent>();
 
+                Game.Scene.AddComponent<HttpComponent>();
 
                 OuterConfig outerConfig = startConfig.GetComponent<OuterConfig>();
 				if (outerConfig != null)
