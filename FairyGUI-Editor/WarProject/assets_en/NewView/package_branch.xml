@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<branchDescription>
-  <resources>
-    <component id="fipc8" name="LoginButton.xml" path="/"/>
-    <component id="fipc9" name="tip1.xml" path="/"/>
-    <component id="fipca" name="TipText.xml" path="/"/>
-  </resources>
-</branchDescription>
