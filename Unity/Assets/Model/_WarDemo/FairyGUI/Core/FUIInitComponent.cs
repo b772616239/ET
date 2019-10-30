@@ -1,4 +1,4 @@
-﻿using ETModel.Model;
+﻿
 using FairyGUI;
 
 namespace ETModel
@@ -22,7 +22,8 @@ namespace ETModel
         {
             UIConfig.defaultFont = DefaultFont;
             modelPackage = UIPackage.AddPackage(ModelPackageName);
-            ModelBinder.BindAll();
+            //ModelBinder.BindAll();
+            //LoginView.LoginViewBinder.BindAll();
         }
 
         public override void Dispose()

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="q6k4bkr1">
+  <resources>
+    <image id="yzi40" name="basicRes2.png" path="/"/>
+    <image id="yzi41" name="basicRes2_pvr.png" path="/"/>
+    <image id="yzi42" name="timg.jpg" path="/"/>
+    <component id="yzi45" name="LoginComponent.xml" path="/" exported="true"/>
+    <component id="fipch" name="Button.xml" path="/"/>
+    <sound id="7s2c14" name="Go_Button.wav" path="/"/>
+    <image id="hc1s15" name="NongChangUIPanel.png" path="/" scale="9grid" scale9grid="160,85,320,170"/>
+    <image id="hc1s17" name="NongChangUI.png" path="/"/>
+    <image id="hc1s18" name="name-di.png" path="/"/>
+  </resources>
+  <publish name="" path="E:\Project\MyET\MyET\Unity\Assets\Bundles\FUI" packageCount="2" maxAtlasSize="2048"/>
+</packageDescription>

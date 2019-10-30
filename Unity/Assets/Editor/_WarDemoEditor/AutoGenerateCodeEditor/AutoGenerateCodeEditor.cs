@@ -11,7 +11,7 @@ namespace ETPlus
 {
     public class AutoGenerateCodeEditor : UnityEditor.AssetModificationProcessor
     {
-        private enum ScriptType
+        public  enum ScriptType
         {
             Other,
             Component,
@@ -19,7 +19,18 @@ namespace ETPlus
             Config,
             Factory
         }
+        [MenuItem("Assets/Tools/CreateFUI",priority =500)]
+        public static void  CreateFUICompoenentSystem()
+        {
+            var scripts= Selection.gameObjects;
 
+            for (int i = 0; i < scripts.Length; i++)
+            {
+                var sp = scripts[i];
+                var path= AssetDatabase.GetAssetPath(sp);
+                CreateScript(sp.name, path);
+            }
+        }
         /// <summary>
         /// 即将创建Asset时
         /// </summary>
@@ -43,44 +54,76 @@ namespace ETPlus
             {
                 return;
             }
-
-            // 获取脚本类型， 这决定生成的脚本样式
-            ScriptType scriptType = GetScriptType(className);
-
-            Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", scriptType, "test1"));
+            CreateScript(className, path);
+        }
+        public static void CreateScript (ScriptType scriptType, string className, string path,bool IsHasAwakeSystem=true)
+        {
+           // Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", scriptType, "test1"));
 
             string scriptNamespace = "";
             string eachNamespace = "";
-            if (path.StartsWith("Assets/Hotfix/"))
+            if (path.StartsWith(@"Assets\Hotfix\"))
             {
                 scriptNamespace = "ETHotfix";
                 eachNamespace = "ETModel";
             }
-            else if (path.StartsWith("Assets/Model/"))
+            else if (path.StartsWith(@"Assets\Model\"))
             {
                 scriptNamespace = "ETModel";
                 eachNamespace = "ETHotfix";
             }
             else
             {
+
+                Debug.LogError(string.Format("<color=#ff0000ff><---{0}-{1}----></color>", "test", "test1"));
+
                 return;
             }
+            if (!File.Exists(path))
+            {
 
+                Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", "dotExITS", "test1"));
+                //File.Create(path);
+                File.WriteAllText(path,"");
+            }
             // 自定义脚本
             using (FileStream fs = new FileStream(path, FileMode.Truncate, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8))
                 {
+                    
                     // 起头
                     if (scriptType == ScriptType.Component)
                     {
                         string parentClassName = className.EndsWith("Component") ? "Component" : "Entity";
-                        sw.Write(
-$"using {eachNamespace};" +
-@"
-using UnityEngine;
-namespace " + scriptNamespace +
-@"
+
+                        string comp =
+$@"	public class {className} : {parentClassName}" +
+        @"
+	{
+		public void Awake()
+		{
+            
+		}
+		public void Start()
+		{
+            
+		}
+		public void Update()
+		{
+            
+		}
+		public void OnDestroy()
+		{
+            
+		}
+		
+	}
+}
+";
+
+                        string awakeSys=
+ @"
 {
 	[ObjectSystem]
 " +
@@ -93,7 +136,24 @@ namespace " + scriptNamespace +
 		{
 			self.Awake();
 		}
-	}
+	}";
+                        string my_namespace = "";
+                        if (!IsHasAwakeSystem)
+                        {
+                            my_namespace= className.Replace("Component", "")+"Pack";
+                        }
+
+                        sw.Write(
+$"using {eachNamespace};\n" +
+$"" +
+(!IsHasAwakeSystem?$"using {scriptNamespace}.{my_namespace};":"") +
+@"
+using UnityEngine;
+namespace " + scriptNamespace +
+
+(IsHasAwakeSystem? awakeSys : "{")
++
+@"
 	[ObjectSystem]
 " +
         $"	public class {className}StartSystem : StartSystem<{className}>" +
@@ -103,7 +163,7 @@ namespace " + scriptNamespace +
         $"		public override void Start({className} self)" +
         @"
 		{
-			self.Start();
+            
 		}
 	}
 	[ObjectSystem]
@@ -115,7 +175,7 @@ namespace " + scriptNamespace +
         $"		public override void Update({className} self)" +
         @"
 		{
-			self.Update();
+            
 		}
 	}
 	[ObjectSystem]
@@ -127,33 +187,12 @@ namespace " + scriptNamespace +
         $"		public override void Destroy({className} self)" +
         @"
 		{
-			self.Deregister();
-			self.OnDestroy();
+            
 		}
 	}
 " +
-        $"	public class {className} : {parentClassName}" +
-        @"
-	{
-		public void Awake()
-		{
-		}
-		public void Start()
-		{
-		}
-		public void Update()
-		{
-		}
-		public void OnDestroy()
-		{
-		}
-		public void OnEvent(EventKey key, object[] args)
-		{
-			
-		}
-	}
-}
-");
+(IsHasAwakeSystem? comp : "}")
+);
                     }
                     else if (scriptType == ScriptType.Event)
                     {
@@ -174,6 +213,7 @@ namespace " + scriptNamespace +
 @"	{
 		public override void Run()
 		{
+            
 		}
 	}
 }
@@ -206,6 +246,12 @@ namespace " + scriptNamespace +
                     }
                     else if (scriptType == ScriptType.Factory)
                     {
+                        string my_namespace = "";
+                        if (!IsHasAwakeSystem)
+                        {
+                            my_namespace = className.Replace("Factory", "") + "Pack";
+                        }
+                        sw.WriteLine(!IsHasAwakeSystem ? $"using {scriptNamespace}.{my_namespace};" : "");
                         sw.WriteLine($"using {eachNamespace};");
                         sw.WriteLine("using UnityEngine;");
                         sw.WriteLine();
@@ -213,12 +259,13 @@ namespace " + scriptNamespace +
                         sw.WriteLine("{");
                         sw.WriteLine($"	public static class {className}");
                         sw.WriteLine("	{");
-                        sw.WriteLine($"		public static {className.Replace("Factory", "")} Create()");
+                        sw.WriteLine($"		public static {(IsHasAwakeSystem?className.Replace("Factory", ""):"FUI")} Create()");
                         sw.WriteLine("		{");
                         sw.WriteLine("			return null;");
                         sw.WriteLine("		}");
                         sw.WriteLine("	}");
                         sw.WriteLine("}");
+
                     }
                     else
                     {
@@ -238,7 +285,14 @@ namespace " + scriptNamespace +
 
             AssetDatabase.Refresh();
         }
+        private static void CreateScript(string className, string path)
+        {
+            // 获取脚本类型， 这决定生成的脚本样式
+            ScriptType scriptType = GetScriptType(className);
 
+            CreateScript(scriptType, className, path);
+        }
+    
         /// <summary>
         /// 创建配置文本
         /// </summary>

@@ -22,5 +22,6 @@
 		public const string LoadingFinish = "LoadingFinish";
 		public const string TestHotfixSubscribMonoEvent = "TestHotfixSubscribMonoEvent";
 		public const string MaxModelEvent = "MaxModelEvent";
+		public const string Login = "Login";
 	}
 }
