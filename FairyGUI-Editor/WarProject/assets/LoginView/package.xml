@@ -11,5 +11,5 @@
     <image id="hc1s17" name="NongChangUI.png" path="/"/>
     <image id="hc1s18" name="name-di.png" path="/" exported="true"/>
   </resources>
-  <publish name="LoginView" path="E:\Project\MyET\MyET\Unity\Assets\Bundles\FUI" packageCount="2" genCode="true"/>
+  <publish name="LoginView" path="E:\Project\MyET\MyET\Unity\Assets\Bundles\FUI" packageCount="2"/>
 </packageDescription>
