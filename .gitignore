@@ -85,3 +85,7 @@ Unity/Assets/Model/Module/Pathfinding/AstarPathfindingProject/ExampleScenes/Pref
 Unity/Assets/Res/Code/Hotfix\.dll\.bytes
 
 Unity/Assets/Res/Code/Hotfix\.pdb\.bytes
+
+Unity/Unity\.Model\.csproj
+
+Unity/Unity\.Hotfix\.csproj
