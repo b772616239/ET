@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="200,17" extention="ScrollBar">
+  <displayList>
+    <image id="n1" name="n1" src="r243u" xy="0,0" size="200,17">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <graph id="n2" name="bar" xy="17,0" size="165,17">
+      <relation target="" sidePair="width-width"/>
+    </graph>
+    <component id="n3" name="arrow1" src="r2433" xy="1,1">
+      <Button icon="ui://duqcpbfnr243y"/>
+    </component>
+    <component id="n4" name="arrow2" src="r2433" xy="184,1">
+      <relation target="" sidePair="right-right"/>
+      <Button icon="ui://duqcpbfnr243v"/>
+    </component>
+    <component id="n5" name="grip" src="r2436" xy="34,1">
+      <Button icon="ui://duqcpbfnr243l"/>
+    </component>
+  </displayList>
+  <ScrollBar/>
+</component>

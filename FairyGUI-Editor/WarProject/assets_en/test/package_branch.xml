@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<branchDescription>
+  <resources>
+    <component id="7s2c8" name="LoginButton.xml" path="/"/>
+    <component id="7s2c9" name="tip1.xml" path="/"/>
+    <component id="7s2ca" name="TipText.xml" path="/"/>
+  </resources>
+</branchDescription>

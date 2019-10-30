@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="172,68" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n0_fipc" name="n0" src="yzi40" fileName="basicRes2.png" xy="0,0">
+      <gearDisplay controller="button" pages="0,2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n1_fipc" name="n1" src="yzi41" fileName="basicRes2_pvr.png" xy="0,0">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n2_fipc" name="title" xy="85,34" pivot="0.5,0.5" anchor="true" size="172,47" font="STKaiti" fontSize="17" color="#49d3f5" align="center" vAlign="middle" autoSize="none" strokeColor="#333333" shadowColor="#333333" shadowOffset="1,1" singleLine="true" text="登  录">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>

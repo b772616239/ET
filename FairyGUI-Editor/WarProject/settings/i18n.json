@@ -1,0 +1,27 @@
+{
+	"langFiles":[{
+		"name":"content",
+		"path":"../Project/content.xml"
+	},{
+		"name":"ct2",
+		"path":"../Project/ct2.xml"
+	},{
+		"name":"content",
+		"path":"content"
+	},{
+		"name":"newContent",
+		"path":"newContent"
+	},{
+		"name":"test",
+		"path":"test.xml"
+	},{
+		"name":"test3",
+		"path":"test3.xml"
+	},{
+		"name":"newContent",
+		"path":"newContent"
+	},{
+		"name":"newContent2",
+		"path":"newContent2.xml"
+	}]
+}

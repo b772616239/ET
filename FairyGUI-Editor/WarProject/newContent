@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- LoginView/LoginButton.xml -->
+  <string name="q6k4bkr1fipch-n2_fipc" mz="title">1</string>
+  <!-- LoginView/TipText.xml -->
+  <string name="q6k4bkr1yzi47-n2_yzi4" mz="tip">1</string>
+  <!-- LoginView/temp.xml -->
+  <string name="q6k4bkr17s2c12-n9_fipc" mz="n9">tip:1airen</string>
+  <!-- LoginView/tip1.xml -->
+  <string name="q6k4bkr1fipcc-n9_fipc" mz="n9">1</string>
+</resources>
