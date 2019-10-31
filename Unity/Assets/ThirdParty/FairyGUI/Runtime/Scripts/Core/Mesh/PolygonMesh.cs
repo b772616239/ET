@@ -3,180 +3,232 @@ using UnityEngine;
 
 namespace FairyGUI
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class PolygonMesh : IMeshFactory, IHitTest
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		public readonly List<Vector2> points;
+    /// <summary>
+    /// 
+    /// </summary>
+    public class PolygonMesh : IMeshFactory, IHitTest
+    {
+        /// <summary>
+        /// points must be in clockwise order, and must start from bottom-left if stretchUV is set.
+        /// </summary>
+        public readonly List<Vector2> points;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Color32? fillColor;
+        /// <summary>
+        /// if you dont want to provide uv, leave it empty.
+        /// </summary>
+        public readonly List<Vector2> texcoords;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Color32[] colors;
+        /// <summary>
+        /// 
+        /// </summary>
+        public Color32? fillColor;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public bool usePercentPositions;
+        /// <summary>
+        /// 
+        /// </summary>
+        public Color32[] colors;
 
-		static List<int> sRestIndices = new List<int>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool usePercentPositions;
 
-		public PolygonMesh()
-		{
-			points = new List<Vector2>();
-		}
+        static List<int> sRestIndices = new List<int>();
 
-		public void OnPopulateMesh(VertexBuffer vb)
-		{
-			int numVertices = points.Count;
-			if (numVertices < 3)
-				return;
+        public PolygonMesh()
+        {
+            points = new List<Vector2>();
+            texcoords = new List<Vector2>();
+        }
 
-			int restIndexPos, numRestIndices;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="point"></param>
+        public void Add(Vector2 point)
+        {
+            points.Add(point);
+        }
 
-			Color32 color = fillColor != null ? (Color32)fillColor : vb.vertexColor;
-			for (int i = 0; i < numVertices; i++)
-			{
-				Vector3 vec = new Vector3(points[i].x, points[i].y, 0);
-				if (usePercentPositions)
-				{
-					vec.x *= vb.contentRect.width;
-					vec.y *= vb.contentRect.height;
-				}
-				vb.AddVert(vec, color);
-			}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="texcoord"></param>
+        public void Add(Vector2 point, Vector2 texcoord)
+        {
+            points.Add(point);
+            texcoords.Add(texcoord);
+        }
 
-			// Algorithm "Ear clipping method" described here:
-			// -> https://en.wikipedia.org/wiki/Polygon_triangulation
-			//
-			// Implementation inspired by:
-			// -> http://polyk.ivank.net
-			// -> Starling
+        public void OnPopulateMesh(VertexBuffer vb)
+        {
+            int numVertices = points.Count;
+            if (numVertices < 3)
+                return;
 
-			sRestIndices.Clear();
-			for (int i = 0; i < numVertices; ++i)
-				sRestIndices.Add(i);
+            int restIndexPos, numRestIndices;
+            Color32 color = fillColor != null ? (Color32)fillColor : vb.vertexColor;
 
-			restIndexPos = 0;
-			numRestIndices = numVertices;
+            float w = vb.contentRect.width;
+            float h = vb.contentRect.height;
+            bool useTexcoords = texcoords.Count >= numVertices;
+            bool fullUV = true;
+            for (int i = 0; i < numVertices; i++)
+            {
+                Vector3 vec = new Vector3(points[i].x, points[i].y, 0);
+                if (usePercentPositions)
+                {
+                    vec.x *= w;
+                    vec.y *= h;
+                }
+                if (useTexcoords)
+                {
+                    Vector2 uv = texcoords[i];
+                    if (uv.x != 0 && uv.x != 1 || uv.y != 0 && uv.y != 1)
+                        fullUV = false;
+                    uv.x = Mathf.Lerp(vb.uvRect.x, vb.uvRect.xMax, uv.x);
+                    uv.y = Mathf.Lerp(vb.uvRect.y, vb.uvRect.yMax, uv.y);
+                    vb.AddVert(vec, color, uv);
+                }
+                else
+                    vb.AddVert(vec, color);
+            }
 
-			Vector2 a, b, c, p;
-			int otherIndex;
-			bool earFound;
-			int i0, i1, i2;
+            if (useTexcoords && fullUV && numVertices == 4)
+                vb._isArbitraryQuad = true;
 
-			while (numRestIndices > 3)
-			{
-				earFound = false;
-				i0 = sRestIndices[restIndexPos % numRestIndices];
-				i1 = sRestIndices[(restIndexPos + 1) % numRestIndices];
-				i2 = sRestIndices[(restIndexPos + 2) % numRestIndices];
+            // Algorithm "Ear clipping method" described here:
+            // -> https://en.wikipedia.org/wiki/Polygon_triangulation
+            //
+            // Implementation inspired by:
+            // -> http://polyk.ivank.net
+            // -> Starling
 
-				a = points[i0];
-				b = points[i1];
-				c = points[i2];
+            sRestIndices.Clear();
+            for (int i = 0; i < numVertices; ++i)
+                sRestIndices.Add(i);
 
-				if ((a.y - b.y) * (c.x - b.x) + (b.x - a.x) * (c.y - b.y) >= 0)
-				{
-					earFound = true;
-					for (int i = 3; i < numRestIndices; ++i)
-					{
-						otherIndex = sRestIndices[(restIndexPos + i) % numRestIndices];
-						p = points[otherIndex];
+            restIndexPos = 0;
+            numRestIndices = numVertices;
 
-						if (IsPointInTriangle(ref p, ref a, ref b, ref c))
-						{
-							earFound = false;
-							break;
-						}
-					}
-				}
+            Vector2 a, b, c, p;
+            int otherIndex;
+            bool earFound;
+            int i0, i1, i2;
 
-				if (earFound)
-				{
-					vb.AddTriangle(i0, i1, i2);
-					sRestIndices.RemoveAt((restIndexPos + 1) % numRestIndices);
+            while (numRestIndices > 3)
+            {
+                earFound = false;
+                i0 = sRestIndices[restIndexPos % numRestIndices];
+                i1 = sRestIndices[(restIndexPos + 1) % numRestIndices];
+                i2 = sRestIndices[(restIndexPos + 2) % numRestIndices];
 
-					numRestIndices--;
-					restIndexPos = 0;
-				}
-				else
-				{
-					restIndexPos++;
-					if (restIndexPos == numRestIndices) break; // no more ears
-				}
-			}
-			vb.AddTriangle(sRestIndices[0], sRestIndices[1], sRestIndices[2]);
+                a = points[i0];
+                b = points[i1];
+                c = points[i2];
 
-			if (colors != null)
-				vb.RepeatColors(colors, 0, vb.currentVertCount);
-		}
+                if ((a.y - b.y) * (c.x - b.x) + (b.x - a.x) * (c.y - b.y) >= 0)
+                {
+                    earFound = true;
+                    for (int i = 3; i < numRestIndices; ++i)
+                    {
+                        otherIndex = sRestIndices[(restIndexPos + i) % numRestIndices];
+                        p = points[otherIndex];
 
-		bool IsPointInTriangle(ref Vector2 p, ref Vector2 a, ref Vector2 b, ref Vector2 c)
-		{
-			// From Starling
-			// This algorithm is described well in this article:
-			// http://www.blackpawn.com/texts/pointinpoly/default.html
+                        if (IsPointInTriangle(ref p, ref a, ref b, ref c))
+                        {
+                            earFound = false;
+                            break;
+                        }
+                    }
+                }
 
-			float v0x = c.x - a.x;
-			float v0y = c.y - a.y;
-			float v1x = b.x - a.x;
-			float v1y = b.y - a.y;
-			float v2x = p.x - a.x;
-			float v2y = p.y - a.y;
+                if (earFound)
+                {
+                    vb.AddTriangle(i0, i1, i2);
+                    sRestIndices.RemoveAt((restIndexPos + 1) % numRestIndices);
 
-			float dot00 = v0x * v0x + v0y * v0y;
-			float dot01 = v0x * v1x + v0y * v1y;
-			float dot02 = v0x * v2x + v0y * v2y;
-			float dot11 = v1x * v1x + v1y * v1y;
-			float dot12 = v1x * v2x + v1y * v2y;
+                    numRestIndices--;
+                    restIndexPos = 0;
+                }
+                else
+                {
+                    restIndexPos++;
+                    if (restIndexPos == numRestIndices) break; // no more ears
+                }
+            }
+            vb.AddTriangle(sRestIndices[0], sRestIndices[1], sRestIndices[2]);
 
-			float invDen = 1.0f / (dot00 * dot11 - dot01 * dot01);
-			float u = (dot11 * dot02 - dot01 * dot12) * invDen;
-			float v = (dot00 * dot12 - dot01 * dot02) * invDen;
+            if (colors != null)
+                vb.RepeatColors(colors, 0, vb.currentVertCount);
+        }
 
-			return (u >= 0) && (v >= 0) && (u + v < 1);
-		}
+        bool IsPointInTriangle(ref Vector2 p, ref Vector2 a, ref Vector2 b, ref Vector2 c)
+        {
+            // From Starling
+            // This algorithm is described well in this article:
+            // http://www.blackpawn.com/texts/pointinpoly/default.html
 
-		public bool HitTest(Rect contentRect, Vector2 point)
-		{
-			if (!contentRect.Contains(point))
-				return false;
+            float v0x = c.x - a.x;
+            float v0y = c.y - a.y;
+            float v1x = b.x - a.x;
+            float v1y = b.y - a.y;
+            float v2x = p.x - a.x;
+            float v2y = p.y - a.y;
 
-			// Algorithm & implementation thankfully taken from:
-			// -> http://alienryderflex.com/polygon/
-			// inspired by Starling
-			int len = points.Count;
-			int i;
-			int j = len - 1;
-			bool oddNodes = false;
+            float dot00 = v0x * v0x + v0y * v0y;
+            float dot01 = v0x * v1x + v0y * v1y;
+            float dot02 = v0x * v2x + v0y * v2y;
+            float dot11 = v1x * v1x + v1y * v1y;
+            float dot12 = v1x * v2x + v1y * v2y;
 
-			for (i = 0; i < len; ++i)
-			{
-				float ix = points[i].x;
-				float iy = points[i].y;
-				float jx = points[j].x;
-				float jy = points[j].y;
+            float invDen = 1.0f / (dot00 * dot11 - dot01 * dot01);
+            float u = (dot11 * dot02 - dot01 * dot12) * invDen;
+            float v = (dot00 * dot12 - dot01 * dot02) * invDen;
 
-				if ((iy < point.y && jy >= point.y || jy < point.y && iy >= point.y) && (ix <= point.x || jx <= point.x))
-				{
-					if (ix + (point.y - iy) / (jy - iy) * (jx - ix) < point.x)
-						oddNodes = !oddNodes;
-				}
+            return (u >= 0) && (v >= 0) && (u + v < 1);
+        }
 
-				j = i;
-			}
+        public bool HitTest(Rect contentRect, Vector2 point)
+        {
+            if (!contentRect.Contains(point))
+                return false;
 
-			return oddNodes;
-		}
-	}
+            // Algorithm & implementation thankfully taken from:
+            // -> http://alienryderflex.com/polygon/
+            // inspired by Starling
+            int len = points.Count;
+            int i;
+            int j = len - 1;
+            bool oddNodes = false;
+            float w = contentRect.width;
+            float h = contentRect.height;
+
+            for (i = 0; i < len; ++i)
+            {
+                float ix = points[i].x;
+                float iy = points[i].y;
+                float jx = points[j].x;
+                float jy = points[j].y;
+                if (usePercentPositions)
+                {
+                    ix *= w;
+                    iy *= h;
+                    ix *= w;
+                    iy *= h;
+                }
+
+                if ((iy < point.y && jy >= point.y || jy < point.y && iy >= point.y) && (ix <= point.x || jx <= point.x))
+                {
+                    if (ix + (point.y - iy) / (jy - iy) * (jx - ix) < point.x)
+                        oddNodes = !oddNodes;
+                }
+
+                j = i;
+            }
+
+            return oddNodes;
+        }
+    }
 }

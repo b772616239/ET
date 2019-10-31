@@ -247,9 +247,10 @@ namespace " + scriptNamespace +
                     else if (scriptType == ScriptType.Factory)
                     {
                         string my_namespace = "";
+                        var simpleName= className.Replace("Factory", "");
                         if (!IsHasAwakeSystem)
                         {
-                            my_namespace = className.Replace("Factory", "") + "Pack";
+                            my_namespace = simpleName + "Pack";
                         }
                         sw.WriteLine(!IsHasAwakeSystem ? $"using {scriptNamespace}.{my_namespace};" : "");
                         sw.WriteLine($"using {eachNamespace};");
@@ -259,9 +260,25 @@ namespace " + scriptNamespace +
                         sw.WriteLine("{");
                         sw.WriteLine($"	public static class {className}");
                         sw.WriteLine("	{");
-                        sw.WriteLine($"		public static {(IsHasAwakeSystem?className.Replace("Factory", ""):"FUI")} Create()");
+                        sw.WriteLine($"		public static {(IsHasAwakeSystem? simpleName : "FUI")} Create()");
                         sw.WriteLine("		{");
-                        sw.WriteLine("			return null;");
+                        if (!IsHasAwakeSystem)
+                        {
+                            sw.WriteLine($@"		var {simpleName}View ={simpleName}Component.CreateInstance();");
+                            sw.WriteLine();
+
+                            sw.WriteLine($@"		{simpleName}View.MakeFullScreen();");
+                            sw.WriteLine();
+
+                            sw.WriteLine($"			return {simpleName}View;");
+
+                        }
+                        else
+                        {
+                            sw.WriteLine("			return null;");
+
+                        }
+
                         sw.WriteLine("		}");
                         sw.WriteLine("	}");
                         sw.WriteLine("}");

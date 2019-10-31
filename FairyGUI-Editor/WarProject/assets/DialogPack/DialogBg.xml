@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="377,454" extention="Label" initName="frame">
+  <Label/>
+  <displayList>
+    <image id="n0_q01z" src="q01z0" name="n0" xy="0,0" size="377,454">
+      <relation target="" sidePair="width,height"/>
+    </image>
+    <graph id="n1_q01z" name="dragArea" xy="0,0" size="377,20" type="empty">
+      <relation target="" sidePair="width-width"/>
+    </graph>
+    <graph id="n2_q01z" name="contentArea" xy="0,21" size="377,434" type="empty">
+      <relation target="" sidePair="width,height"/>
+    </graph>
+  </displayList>
+</component>

@@ -12,6 +12,7 @@
     <image id="hc1s18" name="name-di.png" path="/"/>
     <component id="8yx01a" name="Login.xml" path="/"/>
     <component id="8yx01b" name="WindowFrame1.xml" path="/"/>
+    <component id="8yx01c" name="bgBtn.xml" path="/"/>
   </resources>
-  <publish name="" path="E:\Project\MyET\MyET\Unity\Assets\Bundles\FUI" packageCount="2" maxAtlasSize="2048"/>
+  <publish name="LoginPack" path="E:\Project\MyET\MyET\Unity\Assets\Bundles\FUI" packageCount="2" maxAtlasSize="2048"/>
 </packageDescription>

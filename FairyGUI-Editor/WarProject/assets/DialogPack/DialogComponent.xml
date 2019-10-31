@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1800,1080">
+  <displayList>
+    <image id="n8_q01z" name="greenBg" src="q01z8" fileName="basicRes2_14.png" xy="900,160" pivot="0.5,0.5" anchor="true" size="714,118" group="n13_q01z" visible="false"/>
+    <image id="n9_q01z" name="WinBg" src="q01z9" fileName="basicRes2_16.png" xy="900,156" pivot="0.5,0.5" anchor="true" size="673,118" group="n13_q01z" visible="false"/>
+    <image id="n10_q01z" name="SimpleBg" src="q01za" fileName="basicRes2_5.png" xy="900,160" pivot="0.5,0.5" anchor="true" group="n13_q01z"/>
+    <text id="n11_q01z" name="content" xy="900,161" pivot="0.5,0.5" anchor="true" size="435,77" group="n13_q01z" font="KaiTi" fontSize="34" color="#f0f07d" align="center" vAlign="middle" autoSize="none" text="&#xA;">
+      <relation target="n13_q01z" sidePair="width-width,height-height"/>
+    </text>
+    <group id="n13_q01z" name="n13" xy="543,97" size="714,122" advanced="true">
+      <relation target="" sidePair="center-center,top-top"/>
+    </group>
+  </displayList>
+</component>

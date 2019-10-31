@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="47jl2z3s">
+  <resources>
+    <image id="q01z0" name="DaiTouMingBeiJing.pvr.ccz.png" path="/" scale="9grid" scale9grid="140,1,90,340"/>
+    <component id="q01z1" name="DialogComponent.xml" path="/" exported="true"/>
+    <component id="q01z4" name="DialogBg.xml" path="/"/>
+    <component id="q01z6" name="Button1.xml" path="/"/>
+    <image id="q01z7" name="Dailog.png" path="/" scale="9grid" scale9grid="265,92,188,184"/>
+    <image id="q01z8" name="basicRes2_14.png" path="/"/>
+    <image id="q01z9" name="basicRes2_16.png" path="/"/>
+    <image id="q01za" name="basicRes2_5.png" path="/"/>
+  </resources>
+  <publish name="" path="E:\Project\MyET\MyET\Unity\Assets\Bundles\FUI" packageCount="2"/>
+</packageDescription>
