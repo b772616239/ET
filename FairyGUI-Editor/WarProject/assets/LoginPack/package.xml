@@ -10,6 +10,8 @@
     <image id="hc1s15" name="NongChangUIPanel.png" path="/" scale="9grid" scale9grid="160,85,320,170"/>
     <image id="hc1s17" name="NongChangUI.png" path="/"/>
     <image id="hc1s18" name="name-di.png" path="/"/>
+    <component id="8yx01a" name="Login.xml" path="/"/>
+    <component id="8yx01b" name="WindowFrame1.xml" path="/"/>
   </resources>
   <publish name="" path="E:\Project\MyET\MyET\Unity\Assets\Bundles\FUI" packageCount="2" maxAtlasSize="2048"/>
 </packageDescription>

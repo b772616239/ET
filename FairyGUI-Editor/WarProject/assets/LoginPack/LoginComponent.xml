@@ -5,59 +5,44 @@
     <image id="n0_yzi4" name="n0" src="yzi42" fileName="timg.jpg" xy="0,0" size="1800,1080" fillMethod="hz">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
-    <image id="n27_hc1s" name="n27" src="hc1s15" fileName="NongChangUIPanel.png" xy="900,563" pivot="0.5,0.5" anchor="true" size="893,611" group="n60_rvuk">
-      <relation target="n0_yzi4" sidePair="center-center,middle-middle"/>
-    </image>
-    <component id="n25_7s2c" name="n25" src="fipch" fileName="Button.xml" xy="1054,727" pivot="0.5,0.5" anchor="true" size="250,99" group="n60_rvuk">
-      <relation target="n27_hc1s" sidePair="center-center,middle-middle"/>
-      <Button title="注册" titleFontSize="43" sound="ui://q6k4bkr17s2c14" volume="70"/>
-    </component>
-    <text id="n50_rvuk" name="n50" xy="645,382" size="114,75" group="n53_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="账号"/>
-    <image id="n51_rvuk" name="n51" src="hc1s18" fileName="name-di.png" xy="772,378" size="399,81" group="n53_rvuk"/>
-    <text id="n52_rvuk" name="n52" xy="793,380" size="332,74" group="n53_rvuk" input="true" prompt="请输入账号" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
-    <group id="n53_rvuk" name="n53" xy="645,378" size="526,81" group="n60_rvuk" advanced="true">
-      <relation target="n27_hc1s" sidePair="center-center,middle-middle"/>
-    </group>
-    <component id="n58_rvuk" name="n58" src="fipch" fileName="Button.xml" xy="754,727" pivot="0.5,0.5" anchor="true" size="250,99" group="n60_rvuk">
-      <relation target="n27_hc1s" sidePair="center-center,middle-middle"/>
-      <Button title="登录" titleFontSize="43" sound="ui://q6k4bkr17s2c14" volume="70"/>
-    </component>
-    <text id="n77_rvuk" name="n77" xy="645,523" size="114,75" group="n80_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="密码"/>
-    <image id="n78_rvuk" name="n78" src="hc1s18" fileName="name-di.png" xy="772,520" size="399,81" group="n80_rvuk"/>
-    <text id="n79_rvuk" name="n79" xy="793,521" size="332,74" group="n80_rvuk" input="true" prompt="请输入密码" password="true" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
-    <group id="n80_rvuk" name="n80" xy="645,520" size="526,81" group="n60_rvuk" advanced="true">
-      <relation target="n27_hc1s" sidePair="center-center,middle-middle"/>
-    </group>
-    <group id="n60_rvuk" name="Login" xy="453,257" size="893,611" advanced="true">
-      <gearDisplay controller="login2RegisterController" pages="0"/>
-    </group>
-    <image id="n81_rvuk" name="n81" src="hc1s15" fileName="NongChangUIPanel.png" xy="900,563" pivot="0.5,0.5" anchor="true" size="893,611" group="n92_rvuk">
-      <relation target="n0_yzi4" sidePair="center-center,middle-middle"/>
-    </image>
-    <component id="n82_rvuk" name="n82" src="fipch" fileName="Button.xml" xy="900,727" pivot="0.5,0.5" anchor="true" size="393,99" group="n92_rvuk">
-      <relation target="n81_rvuk" sidePair="center-center,middle-middle"/>
+    <component id="n98_8yx0" name="frameReg" src="8yx01b" fileName="WindowFrame1.xml" xy="900,570" pivot="0.5,0.5" anchor="true" size="830,600" group="n92_rvuk"/>
+    <component id="n82_rvuk" name="n82" src="fipch" fileName="Button.xml" xy="900,730" pivot="0.5,0.5" anchor="true" size="393,99" group="n92_rvuk">
       <Button title="确认注册" titleFontSize="43" sound="ui://q6k4bkr17s2c14" volume="70"/>
     </component>
-    <text id="n83_rvuk" name="n83" xy="645,354" size="114,75" group="n86_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="账号"/>
-    <image id="n84_rvuk" name="n84" src="hc1s18" fileName="name-di.png" xy="772,350" size="399,81" group="n86_rvuk"/>
-    <text id="n85_rvuk" name="n85" xy="793,352" size="332,74" group="n86_rvuk" input="true" prompt="请输入账号" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
-    <group id="n86_rvuk" name="n86" xy="645,350" size="526,81" group="n92_rvuk" advanced="true">
-      <relation target="n81_rvuk" sidePair="center-center,middle-middle"/>
-    </group>
-    <text id="n88_rvuk" name="n88" xy="645,453" size="114,75" group="n91_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="密码"/>
-    <image id="n89_rvuk" name="n89" src="hc1s18" fileName="name-di.png" xy="772,450" size="399,81" group="n91_rvuk"/>
-    <text id="n90_rvuk" name="n90" xy="793,451" size="332,74" group="n91_rvuk" input="true" prompt="请输入密码" password="true" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
-    <group id="n91_rvuk" name="n91" xy="645,450" size="526,81" group="n92_rvuk" advanced="true">
-      <relation target="n81_rvuk" sidePair="center-center,middle-middle"/>
-    </group>
-    <text id="n93_rvuk" name="n93" xy="583,553" size="177,75" group="n96_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="确认密码"/>
-    <image id="n94_rvuk" name="n94" src="hc1s18" fileName="name-di.png" xy="773,550" size="399,81" group="n96_rvuk"/>
-    <text id="n95_rvuk" name="n95" xy="794,551" size="332,74" group="n96_rvuk" input="true" prompt="请再次输入密码" password="true" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
-    <group id="n96_rvuk" name="n96" xy="583,550" size="589,81" group="n92_rvuk" advanced="true">
-      <relation target="n81_rvuk" sidePair="center-center,middle-middle"/>
-    </group>
-    <group id="n92_rvuk" name="Register" xy="453,257" size="893,611" advanced="true">
+    <text id="n83_rvuk" name="n83" xy="645,357" size="114,75" group="n86_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="账号"/>
+    <image id="n84_rvuk" name="n84" src="hc1s18" fileName="name-di.png" xy="772,353" size="399,81" group="n86_rvuk"/>
+    <text id="n85_rvuk" name="n85" xy="793,355" size="332,74" group="n86_rvuk" input="true" prompt="请输入账号" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
+    <group id="n86_rvuk" name="n86" xy="645,353" size="526,81" group="n92_rvuk" advanced="true"/>
+    <text id="n88_rvuk" name="n88" xy="645,456" size="114,75" group="n91_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="密码"/>
+    <image id="n89_rvuk" name="n89" src="hc1s18" fileName="name-di.png" xy="772,453" size="399,81" group="n91_rvuk"/>
+    <text id="n90_rvuk" name="n90" xy="793,454" size="332,74" group="n91_rvuk" input="true" prompt="请输入密码" password="true" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
+    <group id="n91_rvuk" name="n91" xy="645,453" size="526,81" group="n92_rvuk" advanced="true"/>
+    <text id="n93_rvuk" name="n93" xy="583,556" size="177,75" group="n96_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="确认密码"/>
+    <image id="n94_rvuk" name="n94" src="hc1s18" fileName="name-di.png" xy="773,553" size="399,81" group="n96_rvuk"/>
+    <text id="n95_rvuk" name="n95" xy="794,554" size="332,74" group="n96_rvuk" input="true" prompt="请再次输入密码" password="true" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
+    <group id="n96_rvuk" name="n96" xy="583,553" size="589,81" group="n92_rvuk" advanced="true"/>
+    <group id="n92_rvuk" name="Register" xy="485,270" size="830,600" advanced="true">
       <gearDisplay controller="login2RegisterController" pages="1"/>
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </group>
+    <component id="n100_8yx0" name="frameLogin" src="8yx01b" fileName="WindowFrame1.xml" xy="900,570" pivot="0.5,0.5" anchor="true" size="830,600" group="n60_rvuk"/>
+    <component id="n25_7s2c" name="n25" src="fipch" fileName="Button.xml" xy="1050,734" pivot="0.5,0.5" anchor="true" size="250,99" group="n60_rvuk">
+      <Button title="注册" titleFontSize="43" sound="ui://q6k4bkr17s2c14" volume="70"/>
+    </component>
+    <text id="n50_rvuk" name="n50" xy="645,389" size="114,75" group="n53_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="账号"/>
+    <image id="n51_rvuk" name="n51" src="hc1s18" fileName="name-di.png" xy="772,385" size="399,81" group="n53_rvuk"/>
+    <text id="n52_rvuk" name="n52" xy="793,387" size="332,74" group="n53_rvuk" input="true" prompt="请输入账号" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
+    <group id="n53_rvuk" name="n53" xy="645,385" size="526,81" group="n60_rvuk" advanced="true"/>
+    <component id="n58_rvuk" name="n58" src="fipch" fileName="Button.xml" xy="750,734" pivot="0.5,0.5" anchor="true" size="250,99" group="n60_rvuk">
+      <Button title="登录" titleFontSize="43" sound="ui://q6k4bkr17s2c14" volume="70"/>
+    </component>
+    <text id="n77_rvuk" name="n77" xy="645,530" size="114,75" group="n80_rvuk" font="STZhongsong" fontSize="42" color="#cccccc" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" shadowColor="#000000" shadowOffset="1,1" text="密码"/>
+    <image id="n78_rvuk" name="n78" src="hc1s18" fileName="name-di.png" xy="772,527" size="399,81" group="n80_rvuk"/>
+    <text id="n79_rvuk" name="n79" xy="793,528" size="332,74" group="n80_rvuk" input="true" prompt="请输入密码" password="true" fontSize="29" color="#999999" vAlign="middle" autoSize="none" text=""/>
+    <group id="n80_rvuk" name="n80" xy="645,527" size="526,81" group="n60_rvuk" advanced="true"/>
+    <group id="n60_rvuk" name="Login" xy="485,270" size="830,600" advanced="true">
+      <gearDisplay controller="login2RegisterController" pages="0"/>
+      <relation target="" sidePair="center-center,middle-middle"/>
     </group>
   </displayList>
 </component>
