@@ -8,10 +8,11 @@ namespace ETHotfix
 	{
 		public static FUI Create()
 		{
+			var LoginView =LoginComponent.CreateInstance();
 
-		       var LoginView =LoginComponent.CreateInstance();
-		       LoginView.MakeFullScreen();
-			   return LoginView;
+			LoginView.MakeFullScreen();
+
+			return LoginView;
 		}
 	}
 }

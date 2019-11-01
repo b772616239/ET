@@ -6,14 +6,13 @@ namespace ETHotfix
 {
 	public static class DialogFactory
 	{
-		public static FUI Create()
+		public static DialogComponent Create()
 		{
-            var view = DialogComponent.CreateInstance();
+			var DialogView =DialogComponent.CreateInstance();
 
-            view.MakeFullScreen();
+			DialogView.MakeFullScreen();
 
-
-            return view;
+			return DialogView;
 		}
 	}
 }

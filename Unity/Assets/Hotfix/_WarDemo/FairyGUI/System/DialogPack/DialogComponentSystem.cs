@@ -7,8 +7,16 @@ namespace ETHotfix{
 	{
 		public override void Start(DialogComponent self)
 		{
-            
-		}
+#region FieldCode 
+
+		    var ShowInContent= self.ShowIn.text;
+
+ #endregion
+
+#region MethodCode 
+
+ #endregion
+       }
 	}
 	[ObjectSystem]
 	public class DialogComponentUpdateSystem : UpdateSystem<DialogComponent>

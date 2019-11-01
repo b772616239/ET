@@ -29,7 +29,7 @@ namespace ETHotfix.DialogPack
 		public GImage greenBg;
 		public GImage WinBg;
 		public GImage SimpleBg;
-		public GTextField content;
+		public GTextField ShowIn;
 		public GGroup n13;
 
 		private static GObject CreateGObject()
@@ -106,7 +106,7 @@ namespace ETHotfix.DialogPack
 				greenBg = (GImage)com.GetChildAt(0);
 				WinBg = (GImage)com.GetChildAt(1);
 				SimpleBg = (GImage)com.GetChildAt(2);
-				content = (GTextField)com.GetChildAt(3);
+				ShowIn = (GTextField)com.GetChildAt(3);
 				n13 = (GGroup)com.GetChildAt(4);
 			}
 		}
@@ -125,7 +125,7 @@ namespace ETHotfix.DialogPack
 			greenBg = null;
 			WinBg = null;
 			SimpleBg = null;
-			content = null;
+			ShowIn = null;
 			n13 = null;
 		}
 	}

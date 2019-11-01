@@ -1,4 +1,5 @@
 ﻿using ETPlus;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -35,7 +36,7 @@ public class ScriptModifyEditor : AssetPostprocessor
 
     public void OnPostprocessTexture(Texture2D tex)
     {
-        Debug.Log("OnPostProcessTexture=" + this.assetPath);
+        //Debug.Log("OnPostProcessTexture=" + this.assetPath);
     }
 
 
@@ -66,7 +67,7 @@ public class ScriptModifyEditor : AssetPostprocessor
                      var LastDir=Path.GetDirectoryName(assetPath);
                     var ParentFolderName = Path.GetFileNameWithoutExtension(LastDir);
 
-                    Debug.Log(string.Format("<color=#ffffffff><--LastDir-{0}-{1}----></color>", LastDir, "test1"));
+                  //  Debug.Log(string.Format("<color=#ffffffff><--LastDir-{0}-{1}----></color>", LastDir, "test1"));
 
                     var root = Path.GetDirectoryName(LastDir);
                  
@@ -90,9 +91,13 @@ public class ScriptModifyEditor : AssetPostprocessor
                         scriptContent= scriptContent.Replace(errorInfo, fixedInfo);
 
                         scriptContent = scriptContent.Replace(errorInfo2, fixedInfo2);
-                        
-                    
+
+                        var Addcode= SplitContent2Code(scriptContent);
+
+
                         File.WriteAllText(assetPath, scriptContent);
+                       
+
 
                         if (fileName.EndsWith("Component"))
                         {
@@ -101,9 +106,16 @@ public class ScriptModifyEditor : AssetPostprocessor
                             if (!File.Exists(sysFilePath))
                             {
                                  Directory.CreateDirectory(dirName);
+                                AutoGenerateCodeEditor.AddCode = Addcode;
+
                                 AutoGenerateCodeEditor.CreateScript(ScriptType.Component, $"{fileName}", sysFilePath, false);
 
-                                Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", sysFilePath, "test1"));
+
+                                Debug.Log(string.Format("<color=#ffffffff><---Addcode{0}-{1}----></color>", Addcode, "test1"));
+
+
+                                AutoGenerateCodeEditor.AddCode = "";
+                                //Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", sysFilePath, "test1"));
 
                             }
 
@@ -127,8 +139,8 @@ public class ScriptModifyEditor : AssetPostprocessor
                                 AutoGenerateCodeEditor.CreateScript(ScriptType.Factory, $"{realName}Factory", factFilePath, false);
                             }
 
-                            Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", sysFilePath, fairyGUIFolder));
-                            Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", eventFilePath, fairyGUIFolder));
+                           // Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", sysFilePath, fairyGUIFolder));
+                            //Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", eventFilePath, fairyGUIFolder));
 
 
                         }
@@ -147,16 +159,101 @@ public class ScriptModifyEditor : AssetPostprocessor
         }
         foreach (string str in deletedAssets)
         {
-            Debug.Log("deletedAssets = " + str);
+            //Debug.Log("deletedAssets = " + str);
         }
         foreach (string str in movedAssets)
         {
-            Debug.Log("movedAssets = " + str);
+           // Debug.Log("movedAssets = " + str);
         }
         foreach (string str in movedFromAssetPaths)
         {
-            Debug.Log("movedFromAssetPaths = " + str);
+           // Debug.Log("movedFromAssetPaths = " + str);
         }
         AssetDatabase.Refresh();
+    }
+
+    public static string SplitContent2Code(string content)
+    {
+        var start= content.IndexOf("public GComponent");
+
+        var end = content.IndexOf("private static");
+        if (start<=0|| end<=0)
+        {
+            return "";
+        }
+        var componentContent= content.Substring(start, end);
+
+        Debug.LogError(string.Format("<color=#ff0000ff><---content{0}-{1}----></color>", componentContent, "test1"));
+
+      //  string[] ContentLines = componentContent.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);//不忽略空行
+        var listenerCode = new StringBuilder();
+        var TextCode = new StringBuilder();
+
+        var methodCode = new StringBuilder();
+
+       // Debug.LogError(string.Format("<color=#ff0000ff><---{0}-{1}----></color>", ContentLines.Length, "test1"));
+        using (StringReader sr = new StringReader(componentContent))
+        {
+            string line;
+            int lineIndex = 0;
+            while ((line = sr.ReadLine()) != null)
+            {
+                var values = line.Split(' ', ';');
+                if (values.Length < 3)
+                {
+                    continue;
+                }
+                // Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", line, "test1"));
+
+                //for (int j = 0; j < values.Length; j++)
+                //{
+                //    var val=values[j];
+
+                //    Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", val, "test1"));
+
+                //}
+                // Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", startCom, endCom - 1));
+
+                var comNmae = values[2];
+
+                Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", comNmae, "test1"));
+
+                if (line.EndsWith("Btn;"))
+                {
+                    listenerCode.AppendLine();
+                    listenerCode.AppendLine($@"		    self.{comNmae}.self.onClick.Add(On{comNmae}Click);");
+
+                    TextCode.AppendLine();
+
+                    methodCode.AppendLine($@"		    void On{comNmae}Click()");
+                    methodCode.AppendLine("		    {");
+                    methodCode.AppendLine();
+                    methodCode.AppendLine("		    }");
+
+                }
+
+                if (line.EndsWith("In;"))
+                {
+                    TextCode.AppendLine();
+                    TextCode.AppendLine($@"		    var {comNmae}Content= self.{comNmae}.text;");
+
+                }
+                if (line.EndsWith("Controller;"))
+                {
+                    TextCode.AppendLine();
+                    TextCode.AppendLine($@"		    var {comNmae}= self.{comNmae};");
+
+                }
+            }
+        }
+            
+            var fieldCode= TextCode.ToString() + listenerCode.ToString();
+        fieldCode = "\n#region FieldCode \n" + fieldCode+ "\n #endregion\n";
+
+        var EndmethodCode = "\n#region MethodCode \n" + methodCode + "\n #endregion\n";
+
+
+        return fieldCode + EndmethodCode;
+
     }
 }

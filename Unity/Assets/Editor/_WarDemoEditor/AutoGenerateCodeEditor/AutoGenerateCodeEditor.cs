@@ -56,7 +56,8 @@ namespace ETPlus
             }
             CreateScript(className, path);
         }
-        public static void CreateScript (ScriptType scriptType, string className, string path,bool IsHasAwakeSystem=true)
+        public static string AddCode;
+        public static void CreateScript (ScriptType scriptType , string className , string path , bool IsHasAwakeSystem=true)
         {
            // Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", scriptType, "test1"));
 
@@ -82,7 +83,7 @@ namespace ETPlus
             if (!File.Exists(path))
             {
 
-                Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", "dotExITS", "test1"));
+                //Debug.Log(string.Format("<color=#ffffffff><---{0}-{1}----></color>", "dotExITS", "test1"));
                 //File.Create(path);
                 File.WriteAllText(path,"");
             }
@@ -162,12 +163,16 @@ namespace " + scriptNamespace +
 " +
         $"		public override void Start({className} self)" +
         @"
-		{
-            
-		}
+		{"
++
+(IsHasAwakeSystem?"\n":AddCode)
++
+
+@"       }
 	}
 	[ObjectSystem]
-" +
+"
++
         $"	public class {className}UpdateSystem : UpdateSystem<{className}>" +
         @"
 	{
@@ -260,14 +265,14 @@ namespace " + scriptNamespace +
                         sw.WriteLine("{");
                         sw.WriteLine($"	public static class {className}");
                         sw.WriteLine("	{");
-                        sw.WriteLine($"		public static {(IsHasAwakeSystem? simpleName : "FUI")} Create()");
+                        sw.WriteLine($"		public static {(IsHasAwakeSystem? simpleName : $"{simpleName}Component")} Create()");
                         sw.WriteLine("		{");
                         if (!IsHasAwakeSystem)
                         {
-                            sw.WriteLine($@"		var {simpleName}View ={simpleName}Component.CreateInstance();");
+                            sw.WriteLine($@"			var {simpleName}View ={simpleName}Component.CreateInstance();");
                             sw.WriteLine();
 
-                            sw.WriteLine($@"		{simpleName}View.MakeFullScreen();");
+                            sw.WriteLine($@"			{simpleName}View.MakeFullScreen();");
                             sw.WriteLine();
 
                             sw.WriteLine($"			return {simpleName}View;");
